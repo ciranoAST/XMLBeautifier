@@ -1,0 +1,10 @@
+
+*.bin
+*.v2
+*.vsidx
+/XMLBeautifier/.vs
+/XMLBeautifier/bin
+/XMLBeautifier/obj
+/XMLBeautifier/Published
+/XMLBeautifier/Properties
+/XMLBeautifier/Properties

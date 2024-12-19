@@ -25,47 +25,21 @@ public static class XmlUtilities
 
     public static string BeautifyXmlText(string xmlContent)
     {
-        // Use a simple formatting method that inserts new lines and tabs for each tag
-        var beautifiedXml = new System.Text.StringBuilder();
-        var indent = 0;
-        var insideTag = false;
-
-        foreach (var c in xmlContent)
+        var doc = XDocument.Parse(xmlContent);
+        var settings = new XmlWriterSettings
         {
-            switch (c)
-            {
-                case '<':
-                {
-                    if (!insideTag)
-                    {
-                        if (beautifiedXml.Length > 0)
-                            beautifiedXml.Append("\n" + new string('\t', indent));
-                        insideTag = true;
-                    }
+            Indent = true,
+            IndentChars = "\t",
+            NewLineChars = "\n",
+            NewLineHandling = NewLineHandling.Replace
+        };
 
-                    beautifiedXml.Append(c);
-                    break;
-                }
-                case '>':
-                {
-                    beautifiedXml.Append(c);
-                    insideTag = false;
-
-                    if (beautifiedXml.Length <= 1 || beautifiedXml[^2] == '/') 
-                        continue;
-
-                    if (beautifiedXml[^3] == '/')// If it's a closing tag, decrease indentation
-                        indent--;
-
-                    else if (beautifiedXml[^3] != '?' && beautifiedXml[^3] != '!') // Otherwise increase indentation
-                        indent++;
-                    break;
-                }
-                default:
-                    beautifiedXml.Append(c);
-                    break;
-            }
+        using var sw = new StringWriter();
+        using (var xw = XmlWriter.Create(sw, settings))
+        {
+            doc.Save(xw);
         }
-        return beautifiedXml.ToString();
+
+        return sw.ToString();
     }
 }

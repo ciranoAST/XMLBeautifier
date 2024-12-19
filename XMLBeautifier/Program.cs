@@ -15,9 +15,9 @@ string xmlPath = string.IsNullOrWhiteSpace(inputPath) ? currentDirectory : input
 
 var xmlFiles = Directory.GetFiles(xmlPath, "*.xml");
 Console.WriteLine($"{xmlFiles.Length} files found");
-for(int i = 0; i<=xmlFiles.Length; i++)
+for(int i = 0; i<xmlFiles.Length; i++)
 { 
-    Console.WriteLine($"Processing file {xmlFiles[i]} ({i+1}/{xmlFiles.Length}");
+    Console.WriteLine($"Processing file {xmlFiles[i]} ({i+1}/{xmlFiles.Length})");
     try
     {
         // Try to load the XML file to check its validity
